@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,eclipse,visualstudiocode,java,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,eclipse,visualstudiocode,java,maven
 
+connection.properties
+
 ### Eclipse ###
 .metadata
 bin/

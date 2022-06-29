@@ -16,6 +16,7 @@ public class UserService {
 	public User createUser(User u) throws UserNotCreatedException {
 		// by default, created account will be basic Users
 		u.setRole(Role.BASIC_USER);
+		
 		User createdUser = ud.insertUser(u);
 		if(createdUser.getId() == -1) {
 			throw new UserNotCreatedException();

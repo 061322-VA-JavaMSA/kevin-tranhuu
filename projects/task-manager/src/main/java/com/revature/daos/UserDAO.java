@@ -1,8 +1,12 @@
 package com.revature.daos;
 
+import java.util.List;
+
 import com.revature.models.User;
 
 public interface UserDAO {
-	public abstract User insertUser(User u);
-	public abstract User getById(int id);
+	User insertUser(User u);
+	User getUserById(int id);
+	User getUserByUsername(String username);
+	List<User> getUsers();
 }

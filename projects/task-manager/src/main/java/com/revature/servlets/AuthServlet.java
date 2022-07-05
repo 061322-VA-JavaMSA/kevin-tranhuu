@@ -15,13 +15,20 @@ import com.revature.exceptions.LoginException;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.User;
 import com.revature.services.AuthService;
+import com.revature.util.CorsFix;
 
 public class AuthServlet extends HttpServlet {
 
-	AuthService as = new AuthService();
-	ObjectMapper om = new ObjectMapper();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private AuthService as = new AuthService();
+	private ObjectMapper om = new ObjectMapper();
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+		CorsFix.addCorsHeader(req.getRequestURI(), res);
+		
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		
@@ -32,11 +39,16 @@ public class AuthServlet extends HttpServlet {
 			session.setAttribute("userId", principal.getId());
 			session.setAttribute("userRole", principal.getRole());
 			
+			// To make Chrome work with our cookie
+			String cookie = res.getHeader("Set-Cookie" + "; SameSite=None; Secure");
+			res.setHeader("Set-Cookie", cookie);;
+			
 			UserDTO principalDTO = new UserDTO(principal);
 			try(PrintWriter pw = res.getWriter()){
 				pw.write(om.writeValueAsString(principalDTO));
 				res.setStatus(200);
 			}
+
 		} catch (UserNotFoundException | LoginException e) {
 			res.sendError(400, "Login unsuccessful.");
 			e.printStackTrace();
@@ -44,8 +56,16 @@ public class AuthServlet extends HttpServlet {
 	}
 	
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
+		CorsFix.addCorsHeader(req.getRequestURI(), res);
+		
 		HttpSession session = req.getSession();
 		
 		session.invalidate();
 	}
+	
+//	@Override
+//	protected void doOptions(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+//		CorsFix.addCorsHeader(req.getRequestURI(),res);
+//		super.doOptions(req, res);
+//	}
 }

@@ -19,36 +19,52 @@ import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.services.UserService;
+import com.revature.util.CorsFix;
 
 /*- 
  * Handles all of the requests made to /users(/...)
  */
 public class UserServlet extends HttpServlet {
 
-	UserService us = new UserService();
-	// object to conver to JSON format
-	ObjectMapper om = new ObjectMapper();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private UserService us = new UserService();
+	// object to convert to JSON format
+	private ObjectMapper om = new ObjectMapper();
 
+	/*-
+	 * All GET request made to the /users endpoint are funneled to this doGet method
+	 * 		- /users
+	 * 			- returns all users
+	 * 		- /users/{id}
+	 * 			- returns a user of a specific id
+	 * Have to determine which behavior to execute based on the URL request 
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		System.out.println("In doGet Method (UserServlet).");
-
+		// Specifying that the response content-type will be JSON
+		CorsFix.addCorsHeader(req.getRequestURI(), res);
 		res.addHeader("Content-Type", "application/json");
 
-		System.out.println("Path info: " + req.getPathInfo());
-		/*-
-		 * String
-		 * 	- "/1"
-		 * 	- null
-		 */
 
+		/*-
+		 * Extra path information associated with the URL the client sent when it made this request
+		 * 	- ie: 
+		 * 		- "/1" if /users/1
+		 * 		- null if /users
+		 */
 		String pathInfo = req.getPathInfo();
 
 		// if pathInfo is null, the req should be to /users -> send back all users
 		if (pathInfo == null) {
 
+			/*-
+			 *  HttpSession allows us to retrieve information placed in the session object passed in a previous HttpResponse 
+			 *  	- in this case, the Session is set in the AuthServlet
+			 */
 			HttpSession session = req.getSession();
-			System.out.println(session.getAttribute("userRole"));
 
 			if (session.getAttribute("userRole")!= null && session.getAttribute("userRole").equals(Role.ADMIN)) {
 				// retrieving users from db using UserService
@@ -58,11 +74,6 @@ public class UserServlet extends HttpServlet {
 				// converting Users to UserDTOs for data transfer
 				users.forEach(u -> usersDTO.add(new UserDTO(u)));
 
-//			for(User u : users) {
-//				UserDTO newUserDTO = new UserDTO(u);
-//				usersDTO.add(newUserDTO);
-//			}
-
 				// retrieving print writer to write to the Response body
 				PrintWriter pw = res.getWriter();
 				// writing toString representation of Users to body
@@ -70,6 +81,7 @@ public class UserServlet extends HttpServlet {
 
 				pw.close();
 			}else {
+				// if the user making the request is not an admin
 				res.sendError(401, "Unauthorized request.");
 			}
 		} else {

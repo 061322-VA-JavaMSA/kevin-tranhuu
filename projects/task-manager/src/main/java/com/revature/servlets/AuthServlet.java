@@ -40,7 +40,7 @@ public class AuthServlet extends HttpServlet {
 			session.setAttribute("userRole", principal.getRole());
 			
 			// To make Chrome work with our cookie
-			String cookie = res.getHeader("Set-Cookie" + "; SameSite=None; Secure");
+			String cookie = res.getHeader("Set-Cookie") + "; SameSite=None; Secure";
 			res.setHeader("Set-Cookie", cookie);;
 			
 			UserDTO principalDTO = new UserDTO(principal);

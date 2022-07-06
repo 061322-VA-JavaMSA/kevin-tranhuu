@@ -1,23 +1,9 @@
-let getUserButton = document.getElementById('getUser');
-getUserButton.addEventListener('click', getUsers);
+let welcomeH1 = document.getElementById('welcome');
 
-
-async function getUsers(){
-
-    console.log(sessionStorage.getItem('principal'));
-
-    let response = await fetch(`${apiUrl}/users`, {
-        credentials: 'include'
-    });
-
-    if(response.status == 200){
-        let data = await response.json();
-
-        console.log(data);
-
-        // redirect the page on success
-        // window.location.href="../index.html";
-    } else{
-        console.log('Unable to retrieve users.')
-    }
+// Different welcome message based on logged in user retrieved from session storage
+if(principal){
+    welcomeH1.innerHTML = `Welcome back ${principal.username}!`
+} else{
+    welcomeH1.innerHTML = `Welcome to Task Manager!`
 }
+

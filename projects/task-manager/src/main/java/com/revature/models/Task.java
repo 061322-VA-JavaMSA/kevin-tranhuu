@@ -14,6 +14,10 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
+
+
+
+
 @Entity
 @Table(name="tasks")
 public class Task {

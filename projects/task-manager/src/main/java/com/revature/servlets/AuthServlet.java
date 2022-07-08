@@ -64,7 +64,7 @@ public class AuthServlet extends HttpServlet {
 	}
 	
 	
-	// used to prevent CORS preflight issue
+// used to prevent CORS preflight issue
 	@Override
 	protected void doOptions(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		CorsFix.addCorsHeader(req.getRequestURI(),res);

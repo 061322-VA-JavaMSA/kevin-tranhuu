@@ -9,6 +9,11 @@
             </tr>
         </thead>
         <tbody id="users-tbody">
+            <tr *ngFor = 'let user of users'>
+                <td>{{user.id}}</td>
+                <td>{{user.username | custom}}</td>
+                <td>{{user.role}}</td>
+            </tr>
         </tbody>
     </table>
 </main>

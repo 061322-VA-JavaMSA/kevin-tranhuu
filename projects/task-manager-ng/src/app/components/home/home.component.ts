@@ -9,7 +9,12 @@ export class HomeComponent implements OnInit {
 
   constructor() { }
 
+  blue: string = 'blue-text';
+
   ngOnInit(): void {
   }
 
+  styles = {
+    color : 'magenta' // could change dynamically
+  }
 }

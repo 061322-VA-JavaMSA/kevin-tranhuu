@@ -9,6 +9,9 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { UsersComponent } from './components/users/users.component';
+import { FormsModule } from '@angular/forms';
+import { RegisterComponent } from './components/register/register.component';
+import { CustomPipe } from './pipes/custom.pipe';
 
 @NgModule({
   declarations: [
@@ -18,11 +21,14 @@ import { UsersComponent } from './components/users/users.component';
     HomeComponent,
     LoginComponent,
     TasksComponent,
-    UsersComponent
+    UsersComponent,
+    RegisterComponent,
+    CustomPipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

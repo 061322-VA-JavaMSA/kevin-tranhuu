@@ -48,7 +48,6 @@ public class UserServlet extends HttpServlet {
 		CorsFix.addCorsHeader(req.getRequestURI(), res);
 		res.addHeader("Content-Type", "application/json");
 
-
 		/*-
 		 * Extra path information associated with the URL the client sent when it made this request
 		 * 	- ie: 
@@ -66,7 +65,7 @@ public class UserServlet extends HttpServlet {
 			 */
 			HttpSession session = req.getSession();
 
-			if (session.getAttribute("userRole")!= null && session.getAttribute("userRole").equals(Role.ADMIN)) {
+			if (session.getAttribute("userRole") != null && session.getAttribute("userRole").equals(Role.ADMIN)) {
 				// retrieving users from db using UserService
 				List<User> users = us.getUsers();
 				List<UserDTO> usersDTO = new ArrayList<>();
@@ -80,8 +79,9 @@ public class UserServlet extends HttpServlet {
 				pw.write(om.writeValueAsString(usersDTO));
 
 				pw.close();
-			}else {
+			} else {
 				// if the user making the request is not an admin
+				System.out.println("Session: " + session.getAttribute("userRole"));
 				res.sendError(401, "Unauthorized request.");
 			}
 		} else {
@@ -121,5 +121,12 @@ public class UserServlet extends HttpServlet {
 			res.sendError(400, "Unable to create new user.");
 			e.printStackTrace();
 		}
+	}
+
+	// used to prevent CORS preflight issue
+	@Override
+	protected void doOptions(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		CorsFix.addCorsHeader(req.getRequestURI(), res);
+		super.doOptions(req, res);
 	}
 }

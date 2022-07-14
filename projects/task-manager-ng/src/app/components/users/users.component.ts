@@ -17,7 +17,8 @@ export class UsersComponent implements OnInit {
     let user1 = new User(1, 'kev', '', Role.ADMIN);
     let user2 = new User(2, 'Mike', '', Role.BASIC_USER);
     let user3 = new User(3, 'Nestor', '', Role.BASIC_USER);
-    this.users = [user1, user2, user3];
+    let user4 = new User(4, 'Derek', '', Role.BASIC_USER);
+    this.users = [user1, user2, user3, user4];
   }
 
 }

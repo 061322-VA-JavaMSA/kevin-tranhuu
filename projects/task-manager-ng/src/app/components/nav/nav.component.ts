@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Role } from 'src/app/models/role.enum';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,14 +11,27 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavComponent implements OnInit {
 
-  loggedInUser: User;
+  // this field will be an attribute on the component directive
+  // <app-nav [loggedInUser]="value"></app-nav>
+  @Input() loggedInUser: User;
 
-  constructor(private authServ:AuthService) { }
+  constructor(private authServ:AuthService, private router: Router) { }
 
   ngOnInit(): void {
     // checking for loggedUser
     // this.loggedInUser = new User(1, 'kev', '', Role.ADMIN);
-    this.loggedInUser = this.authServ.principal;
+    // this.loggedInUser = this.authServ.principal;
   }
 
+  logout(){
+    console.log('logout()')
+    this.authServ.logout().subscribe(
+      () => {
+        this.router.navigate(['login']);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
 }

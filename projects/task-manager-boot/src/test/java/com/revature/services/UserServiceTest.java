@@ -3,31 +3,68 @@ package com.revature.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.revature.TaskManagerBootApplication;
 import com.revature.exceptions.UserNotFoundException;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest(classes=TaskManagerBootApplication.class)
 public class UserServiceTest {
 
-	@Mock
-	private static UserRepository mockUserDao;
+	@MockBean
+	private UserRepository ur;
 	
-	@InjectMocks
-	private static UserService sut;
+	// Spring Container injects our Mock UserRepository bean instead of an actual one.
+	@Autowired
+	private UserService sut;
 	
-	@BeforeAll
-	public static void setup() {
-//		sut = new UserService();
+	@Test
+	public void getUsers(){
+		User u1 = new User();
+		u1.setId(1);
+		u1.setUsername("kev");
+		u1.setPassword("pass");
+		u1.setRole(Role.ADMIN);
+		
+		List<User> users = new ArrayList<>();
+		users.add(u1);
+		
+		Mockito.when(ur.findAll()).thenReturn(users);
+		
+		
+		List<User> usersActual = sut.getUsers();
+		
+		assertEquals(users, usersActual);
+	}
+	
+	@Test
+	public void getUsersByRole() {
+		User u1 = new User();
+		u1.setId(1);
+		u1.setUsername("kev");
+		u1.setPassword("pass");
+		u1.setRole(Role.ADMIN);
+		
+		List<User> users = new ArrayList<>();
+		users.add(u1);
+		
+		Mockito.when(ur.findUserByRole(Role.ADMIN)).thenReturn(users);
+		
+		
+		List<User> usersActual = sut.getByRole(Role.ADMIN);
+		
+		assertEquals(users, usersActual);
 	}
 	
 	@Test
@@ -44,7 +81,8 @@ public class UserServiceTest {
 		uservExpected.setPassword("pass");
 		uservExpected.setRole(Role.ADMIN);
 		
-//		Mockito.when(mockUserDao.getUserById(1)).thenReturn(udaoExpected);
+		
+		Mockito.when(ur.findById(1)).thenReturn(Optional.of(udaoExpected));
 		
 		User uservActual = sut.getUserById(1);
 		
@@ -52,13 +90,13 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void getUserByIdDoesNotExist() {
+	public void getUserByIdDoesNotExist() throws UserNotFoundException {
 		/*-
 		 * Mocking allows us to "mock" dependencies:
 		 * 		- in this case sut will call .getUserById() from mockUserDao instead of UserHibernate
 		 * 		- We can control what mockUserDao will return, in this case it will return null for id = 3
 		 */
-//		Mockito.when(mockUserDao.getUserById(3)).thenReturn(null);
+		Mockito.when(ur.findById(3)).thenReturn(Optional.empty());
 		
 		// sut calls mockUserDao.getUserById(1); instead of calling UserHibernate's implementation - ud.getUserById(1)
 		assertThrows(UserNotFoundException.class, () -> sut.getUserById(3));

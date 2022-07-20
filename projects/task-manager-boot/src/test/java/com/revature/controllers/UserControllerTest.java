@@ -90,7 +90,7 @@ public class UserControllerTest {
 		mockMvc.perform(
 				get("/users"))
 			.andExpect(status().isOk())
-			.andExpect(content().json(om.writeValueAsString(users)));
+			.andExpect(content().json(om.writeValueAsString(usersDTO)));
 	}
 
 }

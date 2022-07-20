@@ -55,6 +55,9 @@ public class UserService {
 	
 	@Transactional
 	public User addUser(User user) {
+		
+		user.setRole(Role.BASIC_USER);
+		
 		return ur.save(user);
 	}
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,10 @@ import { User } from '../models/user';
 export class UserService {
 
   // constructor injection
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   getUsers(): Observable<User[]>{
-    return this.http.get(`${environment.apiUrl}/users`, {
-      withCredentials: true
-    }).pipe(
+    return this.http.get(`${environment.apiUrl}/users`).pipe(
       map(
         response => response as User[]
       )

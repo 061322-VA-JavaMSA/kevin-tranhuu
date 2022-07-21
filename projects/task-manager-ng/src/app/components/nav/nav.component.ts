@@ -15,7 +15,7 @@ export class NavComponent implements OnInit {
   // <app-nav [loggedInUser]="value"></app-nav>
   @Input() loggedInUser: User;
 
-  constructor(private authServ:AuthService, private router: Router) { }
+  constructor(private authServ: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     // checking for loggedUser
@@ -23,15 +23,9 @@ export class NavComponent implements OnInit {
     // this.loggedInUser = this.authServ.principal;
   }
 
-  logout(){
+  logout() {
     console.log('logout()')
-    this.authServ.logout().subscribe(
-      () => {
-        this.router.navigate(['login']);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.authServ.logout();
+    this.router.navigate(['login']);
   }
 }

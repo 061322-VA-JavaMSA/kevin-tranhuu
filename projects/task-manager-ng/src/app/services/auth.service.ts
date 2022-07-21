@@ -10,11 +10,11 @@ import { map } from 'rxjs/operators'
 export class AuthService {
 
   principal: User;
+  token: String;
 
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string) {
-    console.log(`${username} + ${password}`);
     /*
       POST - /auth
         headers: {
@@ -32,12 +32,12 @@ export class AuthService {
         // we're leveraging form params and not exposing credentials to the url
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      withCredentials: true // allows us to use HTTP Session cookie
+      observe: 'response'
     }).pipe(
       map(
         response => { 
-          this.principal = response as User;
-          console.log(this.principal);
+          this.principal = response.body as User;
+          this.token =  response.headers.get('Authorization') || '';
         }
       )
     );
@@ -45,8 +45,6 @@ export class AuthService {
 
   logout() {
     this.principal = null;
-    return this.http.delete(`${environment.apiUrl}/auth`, {
-      withCredentials: true
-    });
+    this.token = '';
   }
 }

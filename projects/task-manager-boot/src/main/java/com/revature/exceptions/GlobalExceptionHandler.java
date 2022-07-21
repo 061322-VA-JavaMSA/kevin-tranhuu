@@ -14,9 +14,9 @@ public class GlobalExceptionHandler {
 		// behavior to be done, ie: log
 	}
 	
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Bad.")
-	@ExceptionHandler(Exception.class)
-	public void handleException() {
+	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Bad credentials.")
+	@ExceptionHandler(AuthenticationException.class)
+	public void handleAuthenticationException() {
 		// behavior to be done, ie: log
 	}
 }

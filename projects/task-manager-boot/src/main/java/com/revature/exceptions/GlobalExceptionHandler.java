@@ -19,4 +19,10 @@ public class GlobalExceptionHandler {
 	public void handleAuthenticationException() {
 		// behavior to be done, ie: log
 	}
+
+	@Override
+	public String toString() {
+		return "GlobalExceptionHandler []";
+	}
+	
 }

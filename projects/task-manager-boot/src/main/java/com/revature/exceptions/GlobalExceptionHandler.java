@@ -19,4 +19,10 @@ public class GlobalExceptionHandler {
 	public void handleAuthenticationException() {
 		// behavior to be done, ie: log
 	}
+	
+	@ResponseStatus(value=HttpStatus.UNAUTHORIZED, reason="Bad token.")
+	@ExceptionHandler(AuthorizationException.class)
+	public void handleAuthorizationException() {
+		// behavior to be done, ie: log
+	}
 }

@@ -1,6 +1,7 @@
 package com.revature.aspects;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -15,7 +16,11 @@ public class LoggingAspect {
 	
 	@Before("within(com.revature.exceptions.GlobalExceptionHandler)")
 	public void logExceptions(JoinPoint jp) {
-		log.error(jp.getTarget() + " was invoked " + jp.getSignature());
+		log.error(jp.getTarget() + " was invoked " +jp.getSignature());
 	}
 	
+	@After("execution(* login(..))")
+	public void logLogin(JoinPoint jp) {
+		log.info(jp.getTarget() + " was invoked " +jp.getSignature());
+	}
 }

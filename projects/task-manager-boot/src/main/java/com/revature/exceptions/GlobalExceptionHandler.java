@@ -8,15 +8,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="No user found.")
+	@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "No user found.")
 	@ExceptionHandler(UserNotFoundException.class)
 	public void handleUserNotFoundException() {
 		// behavior to be done, ie: log
 	}
-	
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Bad credentials.")
+
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad credentials.")
 	@ExceptionHandler(AuthenticationException.class)
 	public void handleAuthenticationException() {
+		// behavior to be done, ie: log
+	}
+
+	@ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Bad token.")
+	@ExceptionHandler(AuthorizationException.class)
+	public void handleAuthorizationException() {
 		// behavior to be done, ie: log
 	}
 
@@ -24,5 +30,4 @@ public class GlobalExceptionHandler {
 	public String toString() {
 		return "GlobalExceptionHandler []";
 	}
-	
 }

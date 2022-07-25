@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { UsersComponent } from './components/users/users.component';
 import { AdminGuard } from './guards/admin.guard';
+import { BasicUserGuard } from './guards/basic-user.guard';
 
 const routes: Routes = [{
   path: '',
@@ -16,7 +17,8 @@ const routes: Routes = [{
   canActivate: [AdminGuard]
 }, {
   path: 'tasks',
-  component: TasksComponent
+  component: TasksComponent,
+  canActivate: [BasicUserGuard]
 }, {
   path: 'register',
   component: RegisterComponent

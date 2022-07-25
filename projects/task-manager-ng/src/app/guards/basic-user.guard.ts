@@ -10,7 +10,7 @@ export class BasicUserGuard implements CanActivate {
   constructor(private authServ: AuthService, private router: Router){}
   
   canActivate(): boolean | UrlTree {
-      if(this.authServ.principal!= null && this.authServ.principal.role=='ADMIN'){
+      if(this.authServ.principal!= null){
         return true;
       } else {
         return this.router.parseUrl('/login');

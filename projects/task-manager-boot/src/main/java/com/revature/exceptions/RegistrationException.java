@@ -1,6 +1,6 @@
 package com.revature.exceptions;
 
-public class AuthorizationException extends RuntimeException{
+public class RegistrationException extends RuntimeException{
 
 	/**
 	 * 

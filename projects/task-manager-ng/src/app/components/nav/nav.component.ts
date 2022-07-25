@@ -18,13 +18,9 @@ export class NavComponent implements OnInit {
   constructor(private authServ: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    // checking for loggedUser
-    // this.loggedInUser = new User(1, 'kev', '', Role.ADMIN);
-    // this.loggedInUser = this.authServ.principal;
   }
 
   logout() {
-    console.log('logout()')
     this.authServ.logout();
     this.router.navigate(['login']);
   }

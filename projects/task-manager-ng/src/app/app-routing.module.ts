@@ -5,13 +5,15 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { UsersComponent } from './components/users/users.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [{
   path: '',
   component: HomeComponent
 },{
   path: 'users',
-  component: UsersComponent
+  component: UsersComponent,
+  canActivate: [AdminGuard]
 }, {
   path: 'tasks',
   component: TasksComponent

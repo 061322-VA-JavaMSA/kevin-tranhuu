@@ -20,6 +20,13 @@
                 <input class="inputstyle" type="password" name="password" id="password" [(ngModel)]="newUser.password">
             </div>
             <br>
+            <div class="d-flex justify-content-center">
+                <label>Re-enter password:</label>
+            </div>
+            <div class="d-flex justify-content-center">
+                <input class="inputstyle" type="password" name="passwordVerification" [(ngModel)]="passwordVerification">
+            </div>
+            <br>
             <br>
             <br>
             <div class="d-flex justify-content-center">
@@ -28,7 +35,7 @@
             <br>
             <br>
             <div class="d-flex justify-content-center">
-                <div style="color:red;" id="error-div"></div>
+                <div style="color:red;" id="error-div">{{errorMessage}}</div>
             </div>
             <!-- This is hard work. -->
         </form>

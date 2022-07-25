@@ -4,7 +4,7 @@
 		resource="org/springframework/boot/logging/logback/defaults.xml" />
 	<include
 		resource="org/springframework/boot/logging/logback/console-appender.xml" />
-	<property name="LOG_FILE" value="target/log.log" />
+	<property name="LOG_FILE" value="logs/application.log" />
 	<include
 		resource="org/springframework/boot/logging/logback/file-appender.xml" />
 		
@@ -14,7 +14,11 @@
 		<appender-ref ref="CONSOLE" />
 	</root>
 
-	<logger name="com.revature.aspects" level="ERROR">
+	<logger name="com.revature.aspects.LoggingAspect" level="INFO">
+		<appender-ref ref="FILE" />
+	</logger>
+	
+	<logger name="com.revature.exceptions.GlobalExceptionHandler" level="ERROR">
 		<appender-ref ref="FILE" />
 	</logger>
 </configuration>

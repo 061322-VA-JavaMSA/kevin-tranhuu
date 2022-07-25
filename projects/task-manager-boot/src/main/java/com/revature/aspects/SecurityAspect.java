@@ -49,7 +49,6 @@ public class SecurityAspect {
 		 * Retrieving allowed roles for that controller method
 		 */
 		List<String> allowedRoles = Arrays.asList(securedAnnotation.allowedRoles());
-		allowedRoles.forEach(role -> System.out.println(role));
 		
 		// retrieving Auth header from request, throw exception if none is provided
 		String token = request.getHeader("Authorization");

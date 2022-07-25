@@ -22,15 +22,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    console.log(`Login was invoked! Username is : ${this.usernameInput}, password is: ${this.passwordInput}`);
-    /*
-    fetch...
-    */
    this.authServ.login(this.usernameInput, this.passwordInput).subscribe(
     () => {
       this.router.navigate(['']);
     },
-    err => {
+    () => {
       this.errorMessage = 'Unable to login.';
     }
    );

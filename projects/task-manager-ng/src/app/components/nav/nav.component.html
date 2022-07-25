@@ -2,7 +2,7 @@
     <a class="navbar-brand"routerLink=""><img src="../../../assets/images/revature-logo.png"
             style="height: 2.5em; padding: .5em;"></a>
     <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="nav-left">
-        <li *ngIf="loggedInUser" class="nav-item">
+        <li *ngIf="loggedInUser&&loggedInUser.role=='ADMIN'" class="nav-item">
             <a class="nav-link" routerLink="users">Users</a>
         </li>
         <li *ngIf="loggedInUser" class="nav-item">

@@ -14,10 +14,27 @@ export class UserService {
   // constructor injection
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  getUsers(): Observable<User[]>{
-    return this.http.get(`${environment.apiUrl}/users`).pipe(
+  getUsers(): Observable<User[]> {
+    return this.http.get(`${environment.apiUrl}/users`, {
+      headers: {
+        'Authorization': `${this.auth.token}`
+      }
+    }).pipe(
       map(
         response => response as User[]
+      )
+    );
+  }
+
+  createUser(newUser: User): Observable<User> {
+    return this.http.post(`${environment.apiUrl}/users`, newUser, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    ).pipe(
+      map(
+        response => response as User
       )
     );
   }

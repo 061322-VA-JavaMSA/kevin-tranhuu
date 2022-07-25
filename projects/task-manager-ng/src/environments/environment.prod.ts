@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'urlToEC2:8080/task-manager'
+  apiUrl: 'http://ec2-34-204-5-113.compute-1.amazonaws.com:8081'
 };
